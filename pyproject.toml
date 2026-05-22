@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pagopa-data-dqf-dags"
+version = "0.1.0"
+description = "pagoPA Data Quality Framework - Airflow DAGs (template + config-driven deploy)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "pre-commit",
+    "apache-airflow>=2.7",
+    "cloudera-airflow-provider",
+    "pendulum",
+]
+
+# Questo repo non è un package Python: contiene template + config + script.
+# Diciamo esplicitamente a setuptools che non ci sono package da scoprire,
+# altrimenti l'editable install fallisce vedendo dag/ e dags_config/ come due top-level.
+[tool.setuptools]
+packages = []
+py-modules = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

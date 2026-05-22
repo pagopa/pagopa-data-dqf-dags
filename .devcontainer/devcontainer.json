@@ -1,0 +1,19 @@
+{
+    "name": "PagoPa Airflow DAGs Dev Environment",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-azuretools.vscode-docker",
+                "njpwerner.autodocstring",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    },
+    "remoteUser": "root",
+    "postCreateCommand": "pip install -e .[dev]"
+}

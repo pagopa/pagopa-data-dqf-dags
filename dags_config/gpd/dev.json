@@ -1,0 +1,11 @@
+{
+    "repository": "carlomanco-qty/qty-data-contracts",
+    "ref": "main",
+    "schedule": null,
+    "email": ["carlo.manco@quantyca.it"],
+    "contracts": {
+        "payment_option": "src/data/pagopa/gpd/silver/dc-gpd-payment_option.yaml",
+        "payment_position": "src/data/pagopa/gpd/silver/dc-gpd-payment_position.yaml",
+        "transfer": "src/data/pagopa/gpd/silver/dc-gpd-transfer.yaml"
+    }
+}

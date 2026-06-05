@@ -31,6 +31,8 @@ CONFIG_TO_PY = {
     "schedule": "SCHEDULE",
     "contracts": "CONTRACTS",
     "email": "EMAIL",
+    "watermark_column": "WATERMARK_COLUMN",
+    "watermark_from": "WATERMARK_FROM",
 }
 
 

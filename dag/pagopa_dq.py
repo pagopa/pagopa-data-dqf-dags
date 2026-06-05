@@ -21,6 +21,9 @@ CONTRACTS = {
     "transfer": "src/data/pagopa/gpd/silver/dc-gpd-transfer.yaml",
 }
 EMAIL = ["carlo.manco@quantyca.it"]
+# Watermark args opzionali (None = non passati al job Spark).
+WATERMARK_COLUMN = None
+WATERMARK_FROM = None
 # === End config ===
 
 JOB_NAME = f"dq-quality-{ENV}"
@@ -38,15 +41,29 @@ _log.info("[%s] parse-time SYSTEM=%s ENV=%s REF=%s JOB_NAME=%s", DAG_ID, SYSTEM,
 
 
 def _spark_overrides(contract_path: str) -> dict:
+    args = [
+        f"--contract-path={contract_path}",
+        f"--repository={REPOSITORY}",
+        f"--ref={REF}",
+        f"--dag-id={DAG_ID}",
+        # dag_id (parse-time, f-string) + timestamp esecuzione (runtime, Jinja).
+        f"--airflow-run-id={DAG_ID}_{{{{ ts_nodash }}}}",
+    ]
+    if WATERMARK_COLUMN:
+        args.append(f"--watermark-column={WATERMARK_COLUMN}")
+    if WATERMARK_FROM:
+        args.append(f"--watermark-from={WATERMARK_FROM}")
     return {
         "spark": {
-            "args": [
-                f"--contract-path={contract_path}",
-                f"--repository={REPOSITORY}",
-                f"--ref={REF}",
-                f"--env={ENV}",
-                f"--system={SYSTEM}",
-            ],
+            "args": args,
+            # Override runtime delle env var lette dal framework via os.getenv.
+            # Sovrascrive quanto baked-in nel CDE Spark job al cde job create.
+            "conf": {
+                "spark.kubernetes.driverEnv.ENV": ENV,
+                "spark.executorEnv.ENV": ENV,
+                "spark.kubernetes.driverEnv.SYSTEM": SYSTEM,
+                "spark.executorEnv.SYSTEM": SYSTEM,
+            },
         }
     }
 

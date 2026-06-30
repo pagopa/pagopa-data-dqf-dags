@@ -4,8 +4,16 @@
     "schedule": null,
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
-        "payment_option": "src/data/pagopa/gpd/silver/payment_option.yaml",
-        "payment_position": "src/data/pagopa/gpd/silver/payment_position.yaml",
-        "transfer": "src/data/pagopa/gpd/silver/transfer.yaml"
+        "payment_option": "src/data/pagopa/gpd/silver/payment-option-small.yaml",
+        "payment_position": "src/data/pagopa/gpd/silver/payment-position-small.yaml",
+        "transfer": "src/data/pagopa/gpd/silver/transfer-small.yaml"
+    },
+    "xref_datasets": {
+        "payment_option": [
+            "silver_gpd_transfer"
+        ],
+        "payment_position": [
+            "silver_gpd_payment_option"
+        ]
     }
 }

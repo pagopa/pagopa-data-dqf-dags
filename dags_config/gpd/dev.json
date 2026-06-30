@@ -7,5 +7,13 @@
         "payment_option": "src/data/pagopa/gpd/silver/dc-gpd-payment_option.yaml",
         "payment_position": "src/data/pagopa/gpd/silver/dc-gpd-payment_position.yaml",
         "transfer": "src/data/pagopa/gpd/silver/dc-gpd-transfer.yaml"
+    },
+    "xref_datasets": {
+        "payment_option": [
+            "silver_gpd_transfer"
+        ],
+        "payment_position": [
+            "silver_gpd_payment_option"
+        ]
     }
 }

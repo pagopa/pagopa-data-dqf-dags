@@ -33,6 +33,7 @@ CONFIG_TO_PY = {
     "email": "EMAIL",
     "watermark_column": "WATERMARK_COLUMN",
     "watermark_from": "WATERMARK_FROM",
+    "xref_datasets": "XREF_DATASETS",
 }
 
 

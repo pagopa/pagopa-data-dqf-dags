@@ -39,16 +39,24 @@ default_args = {
 
 _log.info("[%s] parse-time SYSTEM=%s ENV=%s REF=%s JOB_NAME=%s", DAG_ID, SYSTEM, ENV, REF, JOB_NAME)
 
+XREF_DATASETS = {}
 
-def _spark_overrides(contract_path: str) -> dict:
+
+def _spark_overrides(entity: str, contract_path: str) -> dict:
     args = [
+        f"--domain={SYSTEM}",
         f"--contract-path={contract_path}",
         f"--repository={REPOSITORY}",
         f"--ref={REF}",
         f"--dag-id={DAG_ID}",
-        # dag_id (parse-time, f-string) + timestamp esecuzione (runtime, Jinja).
         f"--airflow-run-id={DAG_ID}_{{{{ ts_nodash }}}}",
     ]
+    
+    if XREF_DATASETS and entity in XREF_DATASETS:
+        xrefs = XREF_DATASETS[entity]
+        xrefs_str = ",".join(xrefs) if isinstance(xrefs, list) else xrefs
+        args.append(f"--xref-datasets={xrefs_str}")
+        
     if WATERMARK_COLUMN:
         args.append(f"--watermark-column={WATERMARK_COLUMN}")
     if WATERMARK_FROM:
@@ -93,6 +101,6 @@ with DAG(
             task_id=f"dq_{entity}",
             retries=1,
             job_name=JOB_NAME,
-            overrides=_spark_overrides(contract_path),
+            overrides=_spark_overrides(entity, contract_path),
         )
         log_env >> dq_task

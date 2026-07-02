@@ -15,5 +15,10 @@
         "payment_position": [
             "silver_gpd_payment_option"
         ]
+    },
+    "dataset_pk_map": {
+        "payment_option": ["after.id"],
+        "payment_position": ["after.id"],
+        "transfer": ["after.id"]
     }
 }

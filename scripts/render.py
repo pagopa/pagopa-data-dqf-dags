@@ -34,6 +34,7 @@ CONFIG_TO_PY = {
     "watermark_column": "WATERMARK_COLUMN",
     "watermark_from": "WATERMARK_FROM",
     "xref_datasets": "XREF_DATASETS",
+    "dataset_pk_map": "DATASET_PK_MAP",
 }
 
 

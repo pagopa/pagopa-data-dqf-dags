@@ -1,0 +1,13 @@
+{
+    "repository": "carlomanco-qty/qty-data-contracts",
+    "ref": "main",
+    "schedule": null,
+    "email": ["carlo.manco@quantyca.it"],
+    "contracts": {
+        "wallet": "src/data/pagopa/wallet/silver/dc-wallet.yaml"
+    },
+    "xref_datasets": {},
+    "dataset_pk_map": {
+        "wallet": ["after.id"]
+    }
+}

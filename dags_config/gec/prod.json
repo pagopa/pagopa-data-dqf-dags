@@ -1,0 +1,27 @@
+{
+    "repository": "carlomanco-qty/qty-data-contracts",
+    "ref": "main",
+    "schedule": "30 4 * * *",
+    "email": ["carlo.manco@quantyca.it"],
+    "contracts": {
+        "bundles": "src/data/pagopa/gec/silver/dc-gec-bundles.yaml",
+        "cibundles": "src/data/pagopa/gec/silver/dc-gec-cibundles.yaml",
+        "paymenttypes": "src/data/pagopa/gec/silver/dc-gec-paymenttypes.yaml",
+        "touchpoints": "src/data/pagopa/gec/silver/dc-gec-touchpoints.yaml"
+    },
+    "xref_datasets": {
+        "bundles": [
+            "silver_touchpoints",
+            "silver_paymenttypes"
+        ],
+        "cibundles": [
+            "silver_bundles"
+        ]
+    },
+    "dataset_pk_map": {
+        "bundles": ["after.id"],
+        "cibundles": ["after.id"],
+        "paymenttypes": ["after.id"],
+        "touchpoints": ["after.id"]
+    }
+}

@@ -40,6 +40,7 @@ default_args = {
 _log.info("[%s] parse-time SYSTEM=%s ENV=%s REF=%s JOB_NAME=%s", DAG_ID, SYSTEM, ENV, REF, JOB_NAME)
 
 XREF_DATASETS = {}
+DATASET_PK_MAP = {}
 
 
 def _spark_overrides(entity: str, contract_path: str) -> dict:
@@ -56,6 +57,11 @@ def _spark_overrides(entity: str, contract_path: str) -> dict:
         xrefs = XREF_DATASETS[entity]
         xrefs_str = ",".join(xrefs) if isinstance(xrefs, list) else xrefs
         args.append(f"--xref-datasets={xrefs_str}")
+        
+    if DATASET_PK_MAP and entity in DATASET_PK_MAP:
+        pks = DATASET_PK_MAP[entity]
+        pks_str = ",".join(pks) if isinstance(pks, list) else pks
+        args.append(f"--primary-keys={pks_str}")
         
     if WATERMARK_COLUMN:
         args.append(f"--watermark-column={WATERMARK_COLUMN}")
@@ -77,8 +83,19 @@ def _spark_overrides(entity: str, contract_path: str) -> dict:
 
 
 def _log_runtime_env(**context):
+    import json
+    config_dump = {
+        "repository": REPOSITORY,
+        "ref": REF,
+        "schedule": SCHEDULE,
+        "email": EMAIL,
+        "contracts": CONTRACTS,
+        "xref_datasets": XREF_DATASETS,
+        "dataset_pk_map": DATASET_PK_MAP,
+    }
     logging.info("SYSTEM=%s ENV=%s REF=%s JOB_NAME=%s SCHEDULE=%s", SYSTEM, ENV, REF, JOB_NAME, SCHEDULE)
     logging.info("dag_run.run_id=%s", context["dag_run"].run_id)
+    logging.info("CONFIG JSON:\n%s", json.dumps(config_dump, indent=2))
 
 
 with DAG(
@@ -96,6 +113,7 @@ with DAG(
         python_callable=_log_runtime_env,
     )
 
+    #Esecuzione in parallelo
     for entity, contract_path in CONTRACTS.items():
         dq_task = CdeRunJobOperator(
             task_id=f"dq_{entity}",

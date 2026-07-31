@@ -1,0 +1,15 @@
+{
+    "repository": "carlomanco-qty/qty-data-contracts",
+    "ref": "main",
+    "schedule": "30 4 * * *",
+    "email": ["carlo.manco@quantyca.it"],
+    "contracts": {
+        "fdr": "src/data/pagopa/fdr/silver/dc-fdr.yaml",
+        "fdr_overwrites": "src/data/pagopa/fdr/silver/dc-fdr-overwrites.yaml"
+    },
+    "xref_datasets": {},
+    "dataset_pk_map": {
+        "fdr": ["after.id"],
+        "fdr_overwrites": ["after.id"]
+    }
+}

@@ -1,7 +1,7 @@
 {
     "repository": "carlomanco-qty/qty-data-contracts",
     "ref": "main",
-    "schedule": null,
+    "schedule": "20 * * * *",
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
         "payment_option": "src/data/pagopa/gpd/silver/payment-option-small.yaml",

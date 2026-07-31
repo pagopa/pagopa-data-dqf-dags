@@ -11,6 +11,7 @@ Costanti patchate (mappa JSON-key -> Python-constant):
     schedule    -> SCHEDULE
     contracts   -> CONTRACTS
     email       -> EMAIL
+    owner       -> OWNER
 
 Uso:
     python scripts/render.py <system> <env> <source.py> <config.json> <output.py>
@@ -31,6 +32,7 @@ CONFIG_TO_PY = {
     "schedule": "SCHEDULE",
     "contracts": "CONTRACTS",
     "email": "EMAIL",
+    "owner": "OWNER",
     "watermark_column": "WATERMARK_COLUMN",
     "watermark_from": "WATERMARK_FROM",
     "xref_datasets": "XREF_DATASETS",

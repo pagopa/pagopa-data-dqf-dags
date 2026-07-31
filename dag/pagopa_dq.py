@@ -21,6 +21,7 @@ CONTRACTS = {
     "transfer": "src/data/pagopa/gpd/silver/dc-gpd-transfer.yaml",
 }
 EMAIL = ["carlo.manco@quantyca.it"]
+OWNER = "srv_cdp_pagopa_pagopa_dqf_rw"
 # Watermark args opzionali (None = non passati al job Spark).
 WATERMARK_COLUMN = None
 WATERMARK_FROM = None
@@ -30,7 +31,7 @@ JOB_NAME = f"dq-quality-{ENV}"
 DAG_ID = f"dag_dq_{SYSTEM}_quality_{ENV}"
 
 default_args = {
-    "owner": "airflow",
+    "owner": OWNER,
     "depends_on_past": False,
     "email_on_failure": False,
     "email_on_retry": False,

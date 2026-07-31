@@ -1,12 +1,12 @@
 {
-    "repository": "carlomanco-qty/qty-data-contracts",
-    "ref": "main",
+    "repository": "pagopa/pdnd-data-contracts",
+    "ref": "dqf-update-pagopa-dc",
     "schedule": "30 4 * * *",
-    "email": ["carlo.manco@quantyca.it"],
+    "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it"],
     "contracts": {
-        "payment_option": "src/data/pagopa/gpd/silver/payment-option.yaml",
-        "payment_position": "src/data/pagopa/gpd/silver/payment-position.yaml",
-        "transfer": "src/data/pagopa/gpd/silver/transfer.yaml"
+        "payment_option": "src/data/pagopa/gpd/payment-option.yaml",
+        "payment_position": "src/data/pagopa/gpd/payment-position.yaml",
+        "transfer": "src/data/pagopa/gpd/transfer.yaml"
     },
     "xref_datasets": {
         "payment_option": [

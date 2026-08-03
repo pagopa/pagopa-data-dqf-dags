@@ -14,6 +14,10 @@ SYSTEM = "gpd"
 ENV = "dev"
 REPOSITORY = "carlomanco-qty/qty-data-contracts"
 REF = "main"
+# Layer del Data Lake su cui scrive il job: prefissa le tabelle di output del
+# motore ({DL_LAYER}_dqf_{SYSTEM}_results / _failed_records) e il lookup del
+# watermark incrementale. Default di dominio: silver.
+DL_LAYER = "silver"
 SCHEDULE = None
 CONTRACTS = {
     "payment_option": "src/data/pagopa/gpd/silver/dc-gpd-payment_option.yaml",
@@ -38,7 +42,10 @@ default_args = {
     "email": EMAIL,
 }
 
-_log.info("[%s] parse-time SYSTEM=%s ENV=%s REF=%s JOB_NAME=%s", DAG_ID, SYSTEM, ENV, REF, JOB_NAME)
+_log.info(
+    "[%s] parse-time SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s",
+    DAG_ID, SYSTEM, ENV, REF, DL_LAYER, JOB_NAME,
+)
 
 XREF_DATASETS = {}
 DATASET_PK_MAP = {}
@@ -47,6 +54,7 @@ DATASET_PK_MAP = {}
 def _spark_overrides(entity: str, contract_path: str) -> dict:
     args = [
         f"--domain={SYSTEM}",
+        f"--dl-layer={DL_LAYER}",
         f"--contract-path={contract_path}",
         f"--repository={REPOSITORY}",
         f"--ref={REF}",
@@ -88,13 +96,17 @@ def _log_runtime_env(**context):
     config_dump = {
         "repository": REPOSITORY,
         "ref": REF,
+        "dl_layer": DL_LAYER,
         "schedule": SCHEDULE,
         "email": EMAIL,
         "contracts": CONTRACTS,
         "xref_datasets": XREF_DATASETS,
         "dataset_pk_map": DATASET_PK_MAP,
     }
-    logging.info("SYSTEM=%s ENV=%s REF=%s JOB_NAME=%s SCHEDULE=%s", SYSTEM, ENV, REF, JOB_NAME, SCHEDULE)
+    logging.info(
+        "SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SCHEDULE=%s",
+        SYSTEM, ENV, REF, DL_LAYER, JOB_NAME, SCHEDULE,
+    )
     logging.info("dag_run.run_id=%s", context["dag_run"].run_id)
     logging.info("CONFIG JSON:\n%s", json.dumps(config_dump, indent=2))
 

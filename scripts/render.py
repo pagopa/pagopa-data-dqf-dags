@@ -4,14 +4,19 @@ Il source resta un .py valido (default dev/gpd) e viene patchato via AST.
 L'output è anch'esso .py valido.
 
 Costanti patchate (mappa JSON-key -> Python-constant):
-    env         -> ENV
-    system      -> SYSTEM
-    repository  -> REPOSITORY
-    ref         -> REF
-    schedule    -> SCHEDULE
-    contracts   -> CONTRACTS
-    email       -> EMAIL
-    owner       -> OWNER
+    env              -> ENV
+    system           -> SYSTEM
+    repository       -> REPOSITORY
+    ref              -> REF
+    dl_layer         -> DL_LAYER
+    schedule         -> SCHEDULE
+    contracts        -> CONTRACTS
+    email            -> EMAIL
+    owner            -> OWNER
+    watermark_column -> WATERMARK_COLUMN
+    watermark_from   -> WATERMARK_FROM
+    xref_datasets    -> XREF_DATASETS
+    dataset_pk_map   -> DATASET_PK_MAP
 
 Uso:
     python scripts/render.py <system> <env> <source.py> <config.json> <output.py>
@@ -29,6 +34,7 @@ CONFIG_TO_PY = {
     "system": "SYSTEM",
     "repository": "REPOSITORY",
     "ref": "REF",
+    "dl_layer": "DL_LAYER",
     "schedule": "SCHEDULE",
     "contracts": "CONTRACTS",
     "email": "EMAIL",

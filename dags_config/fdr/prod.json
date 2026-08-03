@@ -1,6 +1,7 @@
 {
     "repository": "carlomanco-qty/qty-data-contracts",
     "ref": "main",
+    "dl_layer": "silver",
     "schedule": "30 4 * * *",
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {

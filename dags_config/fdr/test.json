@@ -1,12 +1,12 @@
 {
-    "repository": "carlomanco-qty/qty-data-contracts",
-    "ref": "main",
+    "repository": "pagopa/pdnd-data-contracts",
+    "ref": "dqf-update-pagopa-dc",
     "dl_layer": "silver",
     "schedule": null,
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
-        "fdr": "src/data/pagopa/fdr/silver/dc-fdr.yaml",
-        "fdr_overwrites": "src/data/pagopa/fdr/silver/dc-fdr-overwrites.yaml"
+        "fdr": "src/data/pagopa/fdr/dc-fdr.yaml",
+        "fdr_overwrites": "src/data/pagopa/fdr/dc-fdr-overwrites.yaml"
     },
     "xref_datasets": {},
     "dataset_pk_map": {

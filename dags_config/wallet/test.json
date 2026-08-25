@@ -1,11 +1,11 @@
 {
-    "repository": "carlomanco-qty/qty-data-contracts",
-    "ref": "main",
+    "repository": "pagopa/pdnd-data-contracts",
+    "ref": "dqf-update-pagopa-dc",
     "dl_layer": "silver",
     "schedule": null,
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
-        "wallet": "src/data/pagopa/wallet/silver/dc-wallet.yaml"
+        "wallet": "src/data/pagopa/wallet/dc-wallet.yaml"
     },
     "xref_datasets": {},
     "dataset_pk_map": {

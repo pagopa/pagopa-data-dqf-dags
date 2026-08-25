@@ -126,12 +126,14 @@ with DAG(
         python_callable=_log_runtime_env,
     )
 
-    #Esecuzione in parallelo
+    upstream = log_env
     for entity, contract_path in CONTRACTS.items():
         dq_task = CdeRunJobOperator(
             task_id=f"dq_{entity}",
             retries=1,
             job_name=JOB_NAME,
             overrides=_spark_overrides(entity, contract_path),
+            trigger_rule="all_done",
         )
-        log_env >> dq_task
+        upstream >> dq_task
+        upstream = dq_task

@@ -2,6 +2,7 @@
     "repository": "pagopa/pdnd-data-contracts",
     "ref": "dqf-update-pagopa-dc",
     "dl_layer": "silver",
+    "watermark_bootstrap_from": "2026-01-01T00:00:00",
     "schedule": "30 5 * * *",
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {

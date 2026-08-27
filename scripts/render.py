@@ -15,6 +15,7 @@ Costanti patchate (mappa JSON-key -> Python-constant):
     owner            -> OWNER
     watermark_column -> WATERMARK_COLUMN
     watermark_from   -> WATERMARK_FROM
+    watermark_bootstrap_from -> WATERMARK_BOOTSTRAP_FROM
     xref_datasets    -> XREF_DATASETS
     dataset_pk_map   -> DATASET_PK_MAP
 
@@ -41,6 +42,7 @@ CONFIG_TO_PY = {
     "owner": "OWNER",
     "watermark_column": "WATERMARK_COLUMN",
     "watermark_from": "WATERMARK_FROM",
+    "watermark_bootstrap_from": "WATERMARK_BOOTSTRAP_FROM",
     "xref_datasets": "XREF_DATASETS",
     "dataset_pk_map": "DATASET_PK_MAP",
 }

@@ -29,6 +29,7 @@ OWNER = "srv_cdp_pagopa_pagopa_dqf_rw"
 # Watermark args opzionali (None = non passati al job Spark).
 WATERMARK_COLUMN = None
 WATERMARK_FROM = None
+WATERMARK_BOOTSTRAP_FROM = None
 # === End config ===
 
 JOB_NAME = f"dq-quality-{ENV}"
@@ -76,6 +77,8 @@ def _spark_overrides(entity: str, contract_path: str) -> dict:
         args.append(f"--watermark-column={WATERMARK_COLUMN}")
     if WATERMARK_FROM:
         args.append(f"--watermark-from={WATERMARK_FROM}")
+    if WATERMARK_BOOTSTRAP_FROM:
+        args.append(f"--watermark-bootstrap-from={WATERMARK_BOOTSTRAP_FROM}")
     return {
         "spark": {
             "args": args,
@@ -102,6 +105,9 @@ def _log_runtime_env(**context):
         "contracts": CONTRACTS,
         "xref_datasets": XREF_DATASETS,
         "dataset_pk_map": DATASET_PK_MAP,
+        "watermark_column": WATERMARK_COLUMN,
+        "watermark_from": WATERMARK_FROM,
+        "watermark_bootstrap_from": WATERMARK_BOOTSTRAP_FROM,
     }
     logging.info(
         "SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SCHEDULE=%s",

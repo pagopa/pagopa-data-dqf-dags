@@ -30,6 +30,12 @@ OWNER = "srv_cdp_pagopa_pagopa_dqf_rw"
 WATERMARK_COLUMN = None
 WATERMARK_FROM = None
 WATERMARK_BOOTSTRAP_FROM = None
+# Scrittura degli esiti su Soda Cloud. A False il motore non legge nemmeno i
+# secret 'soda-creds' e resta interamente on-prem; le tabelle Iceberg results e
+# failed_records vengono scritte in entrambi i casi. Passato sempre esplicito al
+# job Spark (true/false), cosi' il valore effettivo e' leggibile negli args del run.
+# Default False come lato motore: pubblicare fuori dal perimetro on-prem e' opt-in.
+SODA_CLOUD_ENABLED = False
 # === End config ===
 
 JOB_NAME = f"dq-quality-{ENV}"
@@ -44,8 +50,8 @@ default_args = {
 }
 
 _log.info(
-    "[%s] parse-time SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s",
-    DAG_ID, SYSTEM, ENV, REF, DL_LAYER, JOB_NAME,
+    "[%s] parse-time SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SODA_CLOUD_ENABLED=%s",
+    DAG_ID, SYSTEM, ENV, REF, DL_LAYER, JOB_NAME, SODA_CLOUD_ENABLED,
 )
 
 XREF_DATASETS = {}
@@ -61,6 +67,7 @@ def _spark_overrides(entity: str, contract_path: str) -> dict:
         f"--ref={REF}",
         f"--dag-id={DAG_ID}",
         f"--airflow-run-id={DAG_ID}_{{{{ ts_nodash }}}}",
+        f"--soda-cloud-enabled={str(bool(SODA_CLOUD_ENABLED)).lower()}",
     ]
     
     if XREF_DATASETS and entity in XREF_DATASETS:
@@ -108,10 +115,11 @@ def _log_runtime_env(**context):
         "watermark_column": WATERMARK_COLUMN,
         "watermark_from": WATERMARK_FROM,
         "watermark_bootstrap_from": WATERMARK_BOOTSTRAP_FROM,
+        "soda_cloud_enabled": SODA_CLOUD_ENABLED,
     }
     logging.info(
-        "SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SCHEDULE=%s",
-        SYSTEM, ENV, REF, DL_LAYER, JOB_NAME, SCHEDULE,
+        "SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SCHEDULE=%s SODA_CLOUD_ENABLED=%s",
+        SYSTEM, ENV, REF, DL_LAYER, JOB_NAME, SCHEDULE, SODA_CLOUD_ENABLED,
     )
     logging.info("dag_run.run_id=%s", context["dag_run"].run_id)
     logging.info("CONFIG JSON:\n%s", json.dumps(config_dump, indent=2))
@@ -136,7 +144,7 @@ with DAG(
     for entity, contract_path in CONTRACTS.items():
         dq_task = CdeRunJobOperator(
             task_id=f"dq_{entity}",
-            retries=1,
+            retries=2,
             job_name=JOB_NAME,
             overrides=_spark_overrides(entity, contract_path),
             trigger_rule="all_done",

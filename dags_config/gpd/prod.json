@@ -3,7 +3,8 @@
     "ref": "dqf-update-pagopa-dc",
     "dl_layer": "silver",
     "watermark_bootstrap_from": "2026-01-01T00:00:00",
-    "schedule": "30 4 * * *",
+    "schedule": "30 19 * * *",
+    "soda_cloud_enabled": false,
     "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it"],
     "contracts": {
         "payment_option": "src/data/pagopa/gpd/payment-option.yaml",

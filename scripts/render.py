@@ -18,6 +18,7 @@ Costanti patchate (mappa JSON-key -> Python-constant):
     watermark_bootstrap_from -> WATERMARK_BOOTSTRAP_FROM
     xref_datasets    -> XREF_DATASETS
     dataset_pk_map   -> DATASET_PK_MAP
+    soda_cloud_enabled -> SODA_CLOUD_ENABLED
 
 Uso:
     python scripts/render.py <system> <env> <source.py> <config.json> <output.py>
@@ -45,6 +46,7 @@ CONFIG_TO_PY = {
     "watermark_bootstrap_from": "WATERMARK_BOOTSTRAP_FROM",
     "xref_datasets": "XREF_DATASETS",
     "dataset_pk_map": "DATASET_PK_MAP",
+    "soda_cloud_enabled": "SODA_CLOUD_ENABLED",
 }
 
 

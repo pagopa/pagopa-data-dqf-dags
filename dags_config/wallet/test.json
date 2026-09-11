@@ -4,6 +4,7 @@
     "dl_layer": "silver",
     "watermark_bootstrap_from": "2026-01-01T00:00:00",
     "schedule": null,
+    "soda_cloud_enabled": false,
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
         "wallet": "src/data/pagopa/wallet/dc-wallet.yaml"

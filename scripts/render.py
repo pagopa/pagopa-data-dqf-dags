@@ -19,6 +19,8 @@ Costanti patchate (mappa JSON-key -> Python-constant):
     xref_datasets    -> XREF_DATASETS
     dataset_pk_map   -> DATASET_PK_MAP
     soda_cloud_enabled -> SODA_CLOUD_ENABLED
+    blob_export_enabled -> BLOB_EXPORT_ENABLED
+    blob_export_failed_records_enabled -> BLOB_EXPORT_FAILED_RECORDS_ENABLED
 
 Uso:
     python scripts/render.py <system> <env> <source.py> <config.json> <output.py>
@@ -47,6 +49,8 @@ CONFIG_TO_PY = {
     "xref_datasets": "XREF_DATASETS",
     "dataset_pk_map": "DATASET_PK_MAP",
     "soda_cloud_enabled": "SODA_CLOUD_ENABLED",
+    "blob_export_enabled": "BLOB_EXPORT_ENABLED",
+    "blob_export_failed_records_enabled": "BLOB_EXPORT_FAILED_RECORDS_ENABLED",
 }
 
 

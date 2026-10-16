@@ -36,6 +36,14 @@ WATERMARK_BOOTSTRAP_FROM = None
 # job Spark (true/false), cosi' il valore effettivo e' leggibile negli args del run.
 # Default False come lato motore: pubblicare fuori dal perimetro on-prem e' opt-in.
 SODA_CLOUD_ENABLED = False
+# Export degli esiti su Azure Blob Storage, da cui li legge Superset. Per ogni
+# contract il motore riscrive in Parquet tutto lo storico results del dataset;
+# un errore di export viene loggato ma non fa fallire il task. Passati sempre
+# espliciti al job Spark (true/false), come SODA_CLOUD_ENABLED.
+BLOB_EXPORT_ENABLED = False
+# Esporta anche failed_records, che contiene valori reali dei record (PII): vale
+# solo con BLOB_EXPORT_ENABLED e va acceso solo con l'approvazione del cliente.
+BLOB_EXPORT_FAILED_RECORDS_ENABLED = False
 # === End config ===
 
 JOB_NAME = f"dq-quality-{ENV}"
@@ -50,8 +58,10 @@ default_args = {
 }
 
 _log.info(
-    "[%s] parse-time SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SODA_CLOUD_ENABLED=%s",
+    "[%s] parse-time SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SODA_CLOUD_ENABLED=%s "
+    "BLOB_EXPORT_ENABLED=%s BLOB_EXPORT_FAILED_RECORDS_ENABLED=%s",
     DAG_ID, SYSTEM, ENV, REF, DL_LAYER, JOB_NAME, SODA_CLOUD_ENABLED,
+    BLOB_EXPORT_ENABLED, BLOB_EXPORT_FAILED_RECORDS_ENABLED,
 )
 
 XREF_DATASETS = {}
@@ -68,6 +78,8 @@ def _spark_overrides(entity: str, contract_path: str) -> dict:
         f"--dag-id={DAG_ID}",
         f"--airflow-run-id={DAG_ID}_{{{{ ts_nodash }}}}",
         f"--soda-cloud-enabled={str(bool(SODA_CLOUD_ENABLED)).lower()}",
+        f"--blob-export-enabled={str(bool(BLOB_EXPORT_ENABLED)).lower()}",
+        f"--blob-export-failed-records-enabled={str(bool(BLOB_EXPORT_FAILED_RECORDS_ENABLED)).lower()}",
     ]
     
     if XREF_DATASETS and entity in XREF_DATASETS:
@@ -116,10 +128,14 @@ def _log_runtime_env(**context):
         "watermark_from": WATERMARK_FROM,
         "watermark_bootstrap_from": WATERMARK_BOOTSTRAP_FROM,
         "soda_cloud_enabled": SODA_CLOUD_ENABLED,
+        "blob_export_enabled": BLOB_EXPORT_ENABLED,
+        "blob_export_failed_records_enabled": BLOB_EXPORT_FAILED_RECORDS_ENABLED,
     }
     logging.info(
-        "SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SCHEDULE=%s SODA_CLOUD_ENABLED=%s",
+        "SYSTEM=%s ENV=%s REF=%s DL_LAYER=%s JOB_NAME=%s SCHEDULE=%s SODA_CLOUD_ENABLED=%s "
+        "BLOB_EXPORT_ENABLED=%s BLOB_EXPORT_FAILED_RECORDS_ENABLED=%s",
         SYSTEM, ENV, REF, DL_LAYER, JOB_NAME, SCHEDULE, SODA_CLOUD_ENABLED,
+        BLOB_EXPORT_ENABLED, BLOB_EXPORT_FAILED_RECORDS_ENABLED,
     )
     logging.info("dag_run.run_id=%s", context["dag_run"].run_id)
     logging.info("CONFIG JSON:\n%s", json.dumps(config_dump, indent=2))

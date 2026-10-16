@@ -3,8 +3,10 @@
     "ref": "main",
     "dl_layer": "silver",
     "watermark_bootstrap_from": "2026-01-01T00:00:00",
-    "schedule": "30 18 * * *",
+    "schedule": "45 1 * * *",
     "soda_cloud_enabled": true,
+    "blob_export_enabled": false,
+    "blob_export_failed_records_enabled": false,
     "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it"],
     "contracts": {
         "bundles": "src/data/pagopa/gec/dc-gec-bundles.yaml",

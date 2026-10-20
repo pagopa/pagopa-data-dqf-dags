@@ -117,3 +117,52 @@ def test_soda_cloud_enabled_passato_a_ogni_task(dag_bag: DagBag) -> None:
             visti += 1
 
     assert visti, "nessun task con override Spark: il test non ha verificato nulla"
+
+
+# Flag dell'export verso Azure Blob: stesse regole di soda_cloud_enabled.
+BLOB_EXPORT_FLAGS = ["blob_export_enabled", "blob_export_failed_records_enabled"]
+
+
+@pytest.mark.parametrize("flag", BLOB_EXPORT_FLAGS)
+def test_flag_blob_export_presente_in_ogni_config(flag: str) -> None:
+    """Ogni config dichiara i flag dell'export, esplicitamente e come booleani.
+
+    Il default del motore e' false, quindi una config che li omette non
+    esporterebbe nulla senza dirlo: la scelta di dominio deve leggersi nella
+    config, in particolare per failed_records che porta valori reali dei record.
+    """
+    mancanti = []
+    non_bool = []
+    for sys_dir in sorted(CONFIGS_ROOT.iterdir()):
+        if not sys_dir.is_dir():
+            continue
+        for cfg in sorted(sys_dir.glob("*.json")):
+            data = json.loads(cfg.read_text(encoding="utf-8"))
+            rel = f"{sys_dir.name}/{cfg.name}"
+            if flag not in data:
+                mancanti.append(rel)
+            elif not isinstance(data[flag], bool):
+                non_bool.append(f"{rel}={data[flag]!r}")
+
+    assert not mancanti, f"config senza '{flag}': {mancanti}"
+    assert not non_bool, f"'{flag}' non booleano (atteso true/false): {non_bool}"
+
+
+@pytest.mark.parametrize("flag", BLOB_EXPORT_FLAGS)
+def test_flag_blob_export_passato_a_ogni_task(dag_bag: DagBag, flag: str) -> None:
+    """Ogni task DQ passa il flag al job Spark, una volta sola e in minuscolo."""
+    cli = "--" + flag.replace("_", "-")
+    visti = 0
+    for dag_id, dag in dag_bag.dags.items():
+        for task in dag.tasks:
+            overrides = getattr(task, "overrides", None)
+            if not overrides:
+                continue  # log_env: PythonOperator, nessun override Spark
+            args = overrides["spark"]["args"]
+            flag_args = [a for a in args if a.split("=")[0] == cli]
+            assert flag_args in ([f"{cli}=true"], [f"{cli}=false"]), (
+                f"{dag_id}.{task.task_id}: atteso esattamente un {cli}=true|false, trovati {flag_args}"
+            )
+            visti += 1
+
+    assert visti, "nessun task con override Spark: il test non ha verificato nulla"

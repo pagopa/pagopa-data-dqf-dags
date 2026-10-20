@@ -15,7 +15,7 @@ dev = [
     "pytest-cov",
     "ruff",
     "pre-commit",
-    "apache-airflow>=2.7",
+    "apache-airflow>=2.7,<3",  # CDE usa Airflow 2: con la 3 DagBag cambia API e i test non partono
     "cloudera-airflow-provider",
     "pendulum",
 ]

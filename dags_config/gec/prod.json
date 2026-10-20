@@ -20,7 +20,8 @@
             "silver_paymenttypes"
         ],
         "cibundles": [
-            "silver_bundles"
+            "silver_bundles",
+            "dl_tassonomie.gold_tassonomia_pagopa"
         ]
     },
     "dataset_pk_map": {

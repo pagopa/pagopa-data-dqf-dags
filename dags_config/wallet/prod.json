@@ -5,8 +5,8 @@
     "watermark_bootstrap_from": "2026-01-01T00:00:00",
     "schedule": "0 0 * * *",
     "soda_cloud_enabled": false,
-    "blob_export_enabled": false,
-    "blob_export_failed_records_enabled": false,
+    "blob_export_enabled": true,
+    "blob_export_failed_records_enabled": true,
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
         "wallet": "src/data/pagopa/wallet/dc-wallet.yaml"

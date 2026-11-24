@@ -5,8 +5,8 @@
     "watermark_bootstrap_from": "2026-01-01T00:00:00",
     "schedule": null,
     "soda_cloud_enabled": false,
-    "blob_export_enabled": false,
-    "blob_export_failed_records_enabled": false,
+    "ext_storage_export_results_enabled": false,
+    "ext_storage_export_failed_records_enabled": false,
     "email": ["carlo.manco@quantyca.it"],
     "contracts": {
         "bundles": "src/data/pagopa/gec/dc-gec-bundles.yaml",

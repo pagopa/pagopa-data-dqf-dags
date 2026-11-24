@@ -120,11 +120,11 @@ def test_soda_cloud_enabled_passato_a_ogni_task(dag_bag: DagBag) -> None:
 
 
 # Flag dell'export verso Azure Blob: stesse regole di soda_cloud_enabled.
-BLOB_EXPORT_FLAGS = ["blob_export_enabled", "blob_export_failed_records_enabled"]
+EXT_STORAGE_EXPORT_FLAGS = ["ext_storage_export_results_enabled", "ext_storage_export_failed_records_enabled"]
 
 
-@pytest.mark.parametrize("flag", BLOB_EXPORT_FLAGS)
-def test_flag_blob_export_presente_in_ogni_config(flag: str) -> None:
+@pytest.mark.parametrize("flag", EXT_STORAGE_EXPORT_FLAGS)
+def test_flag_ext_storage_export_presente_in_ogni_config(flag: str) -> None:
     """Ogni config dichiara i flag dell'export, esplicitamente e come booleani.
 
     Il default del motore e' false, quindi una config che li omette non
@@ -148,8 +148,8 @@ def test_flag_blob_export_presente_in_ogni_config(flag: str) -> None:
     assert not non_bool, f"'{flag}' non booleano (atteso true/false): {non_bool}"
 
 
-@pytest.mark.parametrize("flag", BLOB_EXPORT_FLAGS)
-def test_flag_blob_export_passato_a_ogni_task(dag_bag: DagBag, flag: str) -> None:
+@pytest.mark.parametrize("flag", EXT_STORAGE_EXPORT_FLAGS)
+def test_flag_ext_storage_export_passato_a_ogni_task(dag_bag: DagBag, flag: str) -> None:
     """Ogni task DQ passa il flag al job Spark, una volta sola e in minuscolo."""
     cli = "--" + flag.replace("_", "-")
     visti = 0

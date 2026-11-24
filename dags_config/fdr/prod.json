@@ -1,6 +1,6 @@
 {
     "repository": "pagopa/pdnd-data-contracts",
-    "ref": "dqf-update-pagopa-dc",
+    "ref": "dqf-update-pagopa-dc-fdr",
     "dl_layer": "silver",
     "watermark_bootstrap_from": "2026-01-01T00:00:00",
     "schedule": "0 5 * * *",

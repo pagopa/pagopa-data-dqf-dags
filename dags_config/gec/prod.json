@@ -7,7 +7,7 @@
     "soda_cloud_enabled": true,
     "blob_export_enabled": true,
     "blob_export_failed_records_enabled": false,
-    "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it"],
+    "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it", "daniel.bonfanti@quantyca.it"],
     "contracts": {
         "bundles": "src/data/pagopa/gec/dc-gec-bundles.yaml",
         "cibundles": "src/data/pagopa/gec/dc-gec-cibundles.yaml",

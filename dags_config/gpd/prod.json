@@ -7,7 +7,7 @@
     "soda_cloud_enabled": false,
     "blob_export_enabled": false,
     "blob_export_failed_records_enabled": false,
-    "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it"],
+    "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it", "daniel.bonfanti@quantyca.it"],
     "contracts": {
         "payment_option": "src/data/pagopa/gpd/payment-option.yaml",
         "payment_position": "src/data/pagopa/gpd/payment-position.yaml",

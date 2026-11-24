@@ -7,7 +7,7 @@
     "soda_cloud_enabled": false,
     "blob_export_enabled": true,
     "blob_export_failed_records_enabled": false,
-    "email": ["carlo.manco@quantyca.it"],
+    "email": ["carlo.manco@quantyca.it","federico.sala@quantyca.it", "daniel.bonfanti@quantyca.it"],
     "contracts": {
         "fdr": "src/data/pagopa/fdr/dc-fdr.yaml",
         "fdr_overwrites": "src/data/pagopa/fdr/dc-fdr-overwrites.yaml"
